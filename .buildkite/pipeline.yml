@@ -3,6 +3,7 @@ steps:
     command: 
       - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
+      - "printf 'Running terraform init with reconfigure...'"
       - "terraform init -upgrade -reconfigure"
 
   - wait
@@ -10,6 +11,7 @@ steps:
   - label: ":clipboard: Plan"
     command:
       - "cd terraform/"
+      - "printf 'Creating Terraform plan...'"
       - "terraform plan -out=plan.tfplan"
 
   - wait
@@ -20,5 +22,6 @@ steps:
   - label: ":rocket: Apply"
     command:
       - "cd terraform/"
+      - "printf 'Applying Terraform changes...'"
       - "terraform apply plan.tfplan"
 
