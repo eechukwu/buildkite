@@ -2,21 +2,16 @@ steps:
   - label: ":terraform: Initialize"
     command:
       - "cd terraform/"
-      - "terraform init"
-    artifact_paths:
-      - ".terraform/**/*"
-      - ".terraform.lock.hcl"
+      - "terraform init -upgrade"
 
-  - wait
+  - wait # Ensure that terraform init completes before moving on to terraform plan
 
   - label: ":clipboard: Plan"
     command:
       - "cd terraform/"
       - "terraform plan -out=plan.tfplan"
-    artifact_paths:
-      - "plan.tfplan"
 
-  - wait
+  - wait # Ensure that terraform plan completes before moving on to the apply step
 
   - block: "Apply"
     prompt: "Apply these changes?"
@@ -25,5 +20,3 @@ steps:
     command:
       - "cd terraform/"
       - "terraform apply plan.tfplan"
-    artifact_paths:
-      - "plan.tfplan"
