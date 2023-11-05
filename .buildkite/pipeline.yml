@@ -3,9 +3,9 @@ steps:
     command: 
       - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
-      - "printf 'Running terraform init with reconfigure...'"
+      - "printf 'Initializing Terraform...'"
       - "terraform init -upgrade -reconfigure"
-      - "ls -la"  # Debugging: List files to check the presence of .terraform and .terraform.lock.hcl
+      - "ls -la"  # List files to check the presence of .terraform and .terraform.lock.hcl
 
   - wait
 
@@ -14,9 +14,9 @@ steps:
       - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
       - "printf 'Checking AWS credentials...'"
-      - "env | grep AWS"  # Debugging: Check AWS credentials
+      - "env | grep AWS"  # Check AWS credentials
       - "printf 'Listing directory contents...'"
-      - "ls -la"  # Debugging: List files again
+      - "ls -la"  # List files again
       - "printf 'Creating Terraform plan...'"
       - "terraform plan -out=plan.tfplan"
 
