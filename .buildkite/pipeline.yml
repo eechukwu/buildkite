@@ -1,23 +1,14 @@
 steps:
   - label: ":terraform: Initialize"
     command: 
-      - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
-      - "printf 'Initializing Terraform...'"
-      - "terraform init -upgrade -reconfigure"
-      - "ls -la"  # List files to check the presence of .terraform and .terraform.lock.hcl
+      - "terraform init -reconfigure"
 
   - wait
 
   - label: ":clipboard: Plan"
     command:
-      - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
-      - "printf 'Checking AWS credentials...'"
-      - "env | grep AWS"  # Check AWS credentials
-      - "printf 'Listing directory contents...'"
-      - "ls -la"  # List files again
-      - "printf 'Creating Terraform plan...'"
       - "terraform plan -out=plan.tfplan"
 
   - wait
@@ -27,7 +18,11 @@ steps:
 
   - label: ":rocket: Apply"
     command:
-      - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
-      - "printf 'Applying Terraform changes...'"
       - "terraform apply plan.tfplan"
+
+# If you want caching
+cache:
+  paths:
+    - terraform/.terraform
+    - terraform/.terraform.lock.hcl
