@@ -1,15 +1,11 @@
 steps:
   - label: ":terraform: Initialize"
     command: "buildkite/scripts/init_terraform.sh"
-    agents:
-      queue: "terraform"
 
   - wait
 
   - label: ":clipboard: Plan"
     command: "buildkite/scripts/plan_terraform.sh"
-    agents:
-      queue: "terraform"
 
   - wait
 
@@ -18,5 +14,3 @@ steps:
 
   - label: ":rocket: Apply"
     command: "buildkite/scripts/apply_terraform.sh"
-    agents:
-      queue: "terraform"
