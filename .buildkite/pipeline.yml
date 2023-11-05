@@ -1,11 +1,11 @@
 steps:
   - label: ":terraform: Initialize"
-    command: "init_terraform.sh"
+    command: "cd terraform/ && terraform init"
 
   - wait
 
   - label: ":clipboard: Plan"
-    command: "plan_terraform.sh"
+    command: "cd terraform/ && terraform plan -out=plan.tfplan"
 
   - wait
 
@@ -13,4 +13,4 @@ steps:
     prompt: "Apply these changes?"
 
   - label: ":rocket: Apply"
-    command: "apply_terraform.sh"
+    command: "cd terraform/ && terraform apply plan.tfplan"
