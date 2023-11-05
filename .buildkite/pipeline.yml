@@ -1,8 +1,11 @@
 steps:
   - label: ":terraform: Initialize"
-    command: 
+    command:
       - "cd terraform/"
-      - "terraform init -upgrade"
+      - "terraform init"
+    artifact_paths:
+      - ".terraform/**/*"
+      - ".terraform.lock.hcl"
 
   - wait
 
@@ -10,6 +13,8 @@ steps:
     command:
       - "cd terraform/"
       - "terraform plan -out=plan.tfplan"
+    artifact_paths:
+      - "plan.tfplan"
 
   - wait
 
@@ -20,3 +25,5 @@ steps:
     command:
       - "cd terraform/"
       - "terraform apply plan.tfplan"
+    artifact_paths:
+      - "plan.tfplan"
