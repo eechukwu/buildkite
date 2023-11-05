@@ -1,28 +1,6 @@
 steps:
-  - label: ":terraform: Initialize"
+  - label: ":aws: List S3 Buckets"
     command: 
-      - "cd terraform/"
-      - "terraform init -reconfigure"
-
-  - wait
-
-  - label: ":clipboard: Plan"
-    command:
-      - "cd terraform/"
-      - "terraform plan -out=plan.tfplan"
-
-  - wait
-
-  - block: "Apply"
-    prompt: "Apply these changes?"
-
-  - label: ":rocket: Apply"
-    command:
-      - "cd terraform/"
-      - "terraform apply plan.tfplan"
-
-# If you want caching
-cache:
-  paths:
-    - terraform/.terraform
-    - terraform/.terraform.lock.hcl
+      - "trap 'kill -- $$' INT TERM QUIT"
+      - "echo 'Listing all S3 buckets...'"
+      - "aws s3 ls"
