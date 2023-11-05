@@ -1,11 +1,11 @@
 steps:
   - label: ":terraform: Initialize"
-    command: "../scripts/init_terraform.sh"
+    command: "init_terraform.sh"
 
   - wait
 
   - label: ":clipboard: Plan"
-    command: "../scripts/plan_terraform.sh"
+    command: "plan_terraform.sh"
 
   - wait
 
@@ -13,4 +13,4 @@ steps:
     prompt: "Apply these changes?"
 
   - label: ":rocket: Apply"
-    command: "../scripts/apply_terraform.sh"
+    command: "apply_terraform.sh"
