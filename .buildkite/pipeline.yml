@@ -1,8 +1,9 @@
 steps:
   - label: ":terraform: Initialize"
     command: 
+      - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
-      - "terraform init -upgrade"
+      - "terraform init -upgrade -reconfigure"
 
   - wait
 
@@ -21,8 +22,3 @@ steps:
       - "cd terraform/"
       - "terraform apply plan.tfplan"
 
-# If you want caching
-cache:
-  paths:
-    - terraform/.terraform
-    - terraform/.terraform.lock.hcl
