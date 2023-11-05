@@ -5,12 +5,18 @@ steps:
       - "cd terraform/"
       - "printf 'Running terraform init with reconfigure...'"
       - "terraform init -upgrade -reconfigure"
+      - "ls -la"  # Debugging: List files to check the presence of .terraform and .terraform.lock.hcl
 
   - wait
 
   - label: ":clipboard: Plan"
     command:
+      - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
+      - "printf 'Checking AWS credentials...'"
+      - "env | grep AWS"  # Debugging: Check AWS credentials
+      - "printf 'Listing directory contents...'"
+      - "ls -la"  # Debugging: List files again
       - "printf 'Creating Terraform plan...'"
       - "terraform plan -out=plan.tfplan"
 
@@ -21,7 +27,7 @@ steps:
 
   - label: ":rocket: Apply"
     command:
+      - "trap 'kill -- $$' INT TERM QUIT"
       - "cd terraform/"
       - "printf 'Applying Terraform changes...'"
       - "terraform apply plan.tfplan"
-
