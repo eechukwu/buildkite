@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.aws_region
+  region = "eu-west-2"
 }
 
 terraform {
@@ -13,3 +13,8 @@ terraform {
 
 # Your other Terraform resources...
 
+data "aws_availability_zones" "available" {}
+
+output "available_azs" {
+  value = data.aws_availability_zones.available.names
+}

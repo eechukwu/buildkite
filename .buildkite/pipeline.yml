@@ -1,6 +1,6 @@
 steps:
-  - label: ":aws: List S3 Buckets"
-    command: 
-      - "trap 'kill -- $$' INT TERM QUIT"
-      - "echo 'Listing all S3 buckets...'"
-      - "aws s3 ls"
+  - label: "Test AWS Credentials with Terraform"
+    command:
+      - "cd terraform/" # Replace with the correct path to your Terraform files
+      - "terraform init"
+      - "terraform apply -auto-approve"
